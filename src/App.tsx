@@ -20,11 +20,11 @@ class Counter {
     }
 
     add() {
-        this.dispatch(add);
+        return () => this.dispatch(add);
     }
 
     remove() {
-        this.dispatch(remove);
+        return () => this.dispatch(remove);
     }
 
     dispatch(action: any) {
@@ -38,8 +38,8 @@ function App(props: any) {
     return (
         <>
             <p>Count: {counter.getCount()}</p>
-            <button onClick={counter.add.bind(counter)}>Add</button>
-            <button onClick={counter.remove.bind(counter)}>Remove</button>
+            <button onClick={counter.add()}>Add</button>
+            <button onClick={counter.remove()}>Remove</button>
         </>
   );
 }
