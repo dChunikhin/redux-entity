@@ -1,50 +1,29 @@
 import React from 'react';
 import './App.css';
 import {connect} from "react-redux";
-import actions from './store/actions';
+import Counter from './entities/Counter';
+import Panel from './components/panel/panel.components';
+import { inject } from './redux-entity';
 
-const { add, remove } = actions;
-
-
-class Counter {
-    private readonly count: any = 0;
-    private readonly dispatcher: any;
-
-    constructor(props: any) {
-        this.count = props.counter.counter;
-        this.dispatcher = props.dispatcher;
-    }
-
-    getCount() {
-        return this.count;
-    }
-
-    add() {
-        this.dispatch(add);
-    }
-
-    remove() {
-        this.dispatch(remove);
-    }
-
-    dispatch(action: any) {
-        this.dispatcher(action());
-    }
-}
-
-
-function App(props: any) {
-    const counter = new Counter(props);
+function App({ Counter, ...props }: any) {
     return (
         <>
-            <p>Count: {counter.getCount()}</p>
-            <button onClick={counter.add.bind(counter)}>Add</button>
-            <button onClick={counter.remove.bind(counter)}>Remove</button>
+            <p>Count: {Counter.getCount()}</p>
+            <button onClick={Counter.increment()}>Add</button>
+            <button onClick={Counter.decrement()}>Remove</button>
+            <p>Props: {Object.keys(props).join(`, `)}</p>
+            <p>Children:</p>
+            <Panel someProps={'panel'} Counter={Counter}></Panel>
         </>
-  );
+    );
 }
 
-const mapStateToProps = (state: any) => ({ counter: state.counter.object });
-const mapDispatchToProps = (dispatch: any) => ({ dispatcher: dispatch });
+const [ injectState, injectDispatch ] = inject(Counter);
+export default connect(injectState, injectDispatch)(App);
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+
+// const mapStateToProps = (state: any) => ({ counter: state.counter.object });
+// const mapDispatchToProps = (dispatch: any) => ({ dispatcher: dispatch });
+
