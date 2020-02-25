@@ -1,4 +1,4 @@
-const initialState: any = { count: 0 };
+const initialState: any = { count: 0, baz: 'bar', foo: 111 };
 
 export default function (state: any = initialState, action: any) {
     switch (action.type) {

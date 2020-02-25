@@ -2,10 +2,11 @@ import React from 'react';
 import './App.css';
 import {connect} from "react-redux";
 import Counter from './entities/Counter';
-import Panel from './components/panel/panel.components';
+// import Panel from './components/panel/panel.components';
 import { inject } from './redux-entity';
 
 function App({ Counter, ...props }: any) {
+    console.log(props);
     return (
         <>
             <p>Count: {Counter.getCount()}</p>
@@ -13,14 +14,16 @@ function App({ Counter, ...props }: any) {
             <button onClick={Counter.decrement()}>Remove</button>
             <p>Props: {Object.keys(props).join(`, `)}</p>
             <p>Children:</p>
-            <Panel someProps={'panel'} Counter={Counter}></Panel>
+            {/*<Panel someProps={'panel'} Counter={Counter}></Panel>*/}
         </>
     );
 }
 
-const [ injectState, injectDispatch ] = inject(Counter);
-export default connect(injectState, injectDispatch)(App);
-
+const injected = inject(Counter);
+export default connect(
+    injected.state((state: any) => ({ counter: state.counter })),
+    injected.dispatch
+)(App);
 
 
 

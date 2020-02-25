@@ -11,5 +11,5 @@ function Panel({ Counter: Counter, ...props }: { Counter: Counter, someProps: an
     </>
 }
 
-const [ injectState, injectDispatch ] = inject(Counter);
-export default connect(injectState, injectDispatch)(Panel);
+// const [ injectState, injectDispatch ] = inject(Counter);
+// export default connect(injectState, injectDispatch)(Panel);

@@ -2,36 +2,41 @@ import actions from '../store/actions';
 
 export default class Counter {
     public readonly name: string = 'Counter';
-    private data: any = 0;
-    private dispatcher: any;
+    // private data: any = 0;
+    // private dispatcher: any;
     private actions: any = actions;
 
-    setState(state: any) {
-        this.data = this.extract(state);
-    }
+    public state: any = { count: 0 };
+    public dispatch: any = null;
 
-    setDispatch(dispatch: any) {
-        this.dispatcher = dispatch;
-    }
+
+    // setState(state: any) {
+    //     this.data = this.extract(state);
+    // }
+    //
+    // setDispatch(dispatch: any) {
+    //     this.dispatcher = dispatch;
+    // }
 
     getCount() {
-        return this.data.count;
+        return this.state.count;
     }
 
     increment() {
-        return () => this.dispatch(this.actions.add);
+        return () => this.dispatchAction(this.actions.add);
     }
 
     decrement() {
-        return () => this.dispatch(this.actions.remove);
+        return () => this.dispatchAction(this.actions.remove);
     }
 
-    dispatch(action: any) {
-        this.dispatcher(action());
+    dispatchAction(action: any) {
+        this.dispatch(action());
+        // this.dispatcher(action());
     }
 
-    extract(props: any) {
-        return props.counter;
+    select(state: any) {
+        return state.counter;
     }
 
 }
